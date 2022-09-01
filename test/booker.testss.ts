@@ -1,8 +1,12 @@
+// import { getToken } from "../src/booker/getAuth";
+// // import { checkApiHealth } from "../src/booker/getHealth";
 // const { expect } = require('chai');
-// const axios = require('axios').default;
+// const { checkApiHealth } = require('../src/booker/getHealth');
+
 
 // describe('Testing restful-booker API', function () {
   
+   
 //   it('Check api health', async () => {
 //     const response = await axios.get('https://restful-booker.herokuapp.com/ping'); 
     
