@@ -1,0 +1,32 @@
+{
+  "name": "api-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "test:typescript": "mocha -r ts-node/register test/*.test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salitomeyo/api-testing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salitomeyo/api-testing/issues"
+  },
+  "homepage": "https://github.com/salitomeyo/api-testing#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2"
+  },
+  "devDependencies": {
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^18.7.14",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  }
+}
