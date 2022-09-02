@@ -9,6 +9,10 @@ export interface BookingDates {
     checkout: string;
 }
 
+export interface BookingId {
+    bookingid: number;
+}
+
 export interface BookingInfo {
     firstname:       string;
     lastname:        string;

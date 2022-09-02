@@ -1,11 +1,18 @@
 import { HttpRequests } from "../helpers/HttpRequests";
+import { BookingInfo } from "../helpers/interfaces";
+
+const fs = require('fs');
 
 export class BookingService{
     constructor( private http: HttpRequests ){}
 
     async getBookingIds() {
-        const { data, status } = await this.http.get('https://restful-booker.herokuapp.com/ping');
+        const { data, status } = await this.http.get('https://restful-booker.herokuapp.com/booking');
+
+        let obj = {};
+        obj["data"] = data;
         
+        await fs.writeFileSync(`./src/data/bookingIds.json`, JSON.stringify(obj));
         return { data, status };
     }
 
@@ -26,7 +33,7 @@ export class BookingService{
         return { data, status };
     }
 
-    async createBooking( booking: Object ) {
+    async createBooking( booking: BookingInfo ) {
         const { data, status } = await this.http.post('https://restful-booker.herokuapp.com/booking',  
             booking,
             { headers: {

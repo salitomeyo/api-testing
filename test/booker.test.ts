@@ -15,37 +15,37 @@ describe('Testing restful-booker API', function () {
     it('Check api health', async () => {
         const {data , status} = await apiHealth.getApiHealth();
 
-        assertion.helperAssert(status).to.equal(201);
-        assertion.helperAssert(data).to.equal('Created');
+        assertion.helperExpect(status).to.equal(201);
+        assertion.helperExpect(data).to.equal('Created');
     });
 
     it('get Auth token', async () => {
         const { data, status } = await auth.getTokenAuth("admin", "password123"); 
         
-        assertion.helperAssert(status).to.equal(200);
-        assertion.helperAssert(data.token).to.not.be.null;
+        assertion.helperExpect(status).to.equal(200);
+        assertion.helperExpect(data.token).to.not.be.null;
     });
 
     it('get Bookings id', async () => {
         const { data, status } = await booking.getBookingIds(); 
         
-        assertion.helperAssert(status).to.equal(201);
+        assertion.helperExpect(status).to.equal(200);
     });
     
     it('get Booking', async () => {
-        const { data, status } = await booking.getBookingById(1511);
+        const { data, status } = await booking.getBookingById(157);
         
-        assertion.helperAssert(status).to.equal(200);
+        assertion.helperExpect(status).to.equal(200);
     });
     
     it('delete Booking by id', async () => {
         const { data, status } = await booking.deleteBookingById(771, auth.getToken() );
         
-        assertion.helperAssert(status).to.equal(201);
+        assertion.helperExpect(status).to.equal(201);
     });
     
     it('Create booking', async () => {
-        const response = await booking.createBooking(
+        const { data, status } = await booking.createBooking(
         {
             firstname : 'Jim',
             lastname : 'Brown',
@@ -58,7 +58,7 @@ describe('Testing restful-booker API', function () {
             additionalneeds : 'Breakfast'
         }); 
             
-        assertion.helperAssert(status).to.equal(201);
+        assertion.helperExpect(status).to.equal(201);
         });
     
 //   it('Create booking', async () => {

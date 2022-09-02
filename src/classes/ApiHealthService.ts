@@ -7,7 +7,6 @@ export class ApiHealthService{
     async getApiHealth() {
         const { data, status } = await this.http.get('https://restful-booker.herokuapp.com/ping');
 
-
         return { data, status };
     }
 }

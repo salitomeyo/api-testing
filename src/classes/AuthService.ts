@@ -16,12 +16,12 @@ export class AuthService{
 
     async getTokenAuth(username, password) {
         const { data, status } = await this.http.post('https://restful-booker.herokuapp.com/auth', {
-            username,
-            password
+            "username" : "admin",
+            "password" : "password123"
         }, { 
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
         }});
 
         console.log(data);
