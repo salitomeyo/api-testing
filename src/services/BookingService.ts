@@ -1,6 +1,6 @@
 import { FileController } from "../helpers/FileController";
 import { HttpRequests } from "../helpers/HttpRequests";
-import { BookingInfo } from "../helpers/interfaces";
+import { BookingInfo } from "../models/interfaces";
 
 export class BookingService{
     constructor( private http: HttpRequests, private fileController: FileController ){}

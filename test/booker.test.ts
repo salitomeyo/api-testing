@@ -1,12 +1,11 @@
 import { HttpRequests } from "../src/helpers/HttpRequests";
 import { Assertions } from "../src/helpers/Assertions";
-import { ApiHealthService } from "../src/classes/ApiHealthService";
-import { AuthService } from "../src/classes/AuthService";
-import { BookingService } from "../src/classes/BookingService";
+import { ApiHealthService } from "../src/services/ApiHealthService";
+import { AuthService } from "../src/services/AuthService";
+import { BookingService } from "../src/services/BookingService";
 import { FileController } from "../src/helpers/FileController";
 import { DataHelper } from "../src/helpers/DataHelper";
 require('dotenv').config();
-// require('dotenv').config();
 
 describe('Testing restful-booker API', function () {
   

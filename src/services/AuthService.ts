@@ -1,6 +1,6 @@
 import { FileController } from "../helpers/FileController";
 import { HttpRequests } from "../helpers/HttpRequests";
-import { LoginInfo } from "../helpers/interfaces";
+import { LoginInfo } from "../models/interfaces";
 
 export class AuthService{
     
