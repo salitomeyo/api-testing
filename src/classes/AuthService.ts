@@ -1,18 +1,13 @@
+import { FileController } from "../helpers/FileController";
 import { HttpRequests } from "../helpers/HttpRequests";
 import { LoginInfo } from "../helpers/interfaces";
 
 export class AuthService{
-    private token: string
-
+    
     constructor( 
-        private http: HttpRequests
-    ){
-        this.token = '';
-    }
-
-    getToken() {
-        return this.token;
-    }
+        private http: HttpRequests,
+        private fileController: FileController,
+    ){}
 
     async getTokenAuth( loginInfo: LoginInfo) {
 
@@ -20,7 +15,8 @@ export class AuthService{
             accept: 'application/json'
         }});
 
-        this.token = `token=${data.token}`;
+        this.fileController.createFile('.env', `TOKEN="${data.token}"`);
+
         return { data, status };
     }
 }

@@ -23,10 +23,10 @@ export class BookingService{
         return { data, status };
     }
 
-    async deleteBookingById( id: number, token: string ) {
+    async deleteBookingById( id: number, token?: string ) {
         const { data, status } = await this.http.delete(`https://restful-booker.herokuapp.com/booking/${ id }`, { headers: {
             'Content-Type': 'application/json',
-            'Cookie': token,
+            'Cookie': `token=${token}`,
         }});
 
         return { data, status };

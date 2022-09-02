@@ -5,14 +5,17 @@ import { AuthService } from "../src/classes/AuthService";
 import { BookingService } from "../src/classes/BookingService";
 import { FileController } from "../src/helpers/FileController";
 import { DataHelper } from "../src/helpers/DataHelper";
+require('dotenv').config();
+// require('dotenv').config();
 
 describe('Testing restful-booker API', function () {
   
     const http = new HttpRequests();
     const fileController = new FileController();
+
     const assertion = new Assertions();
     const apiHealth = new ApiHealthService(http);
-    const auth = new AuthService(http);
+    const auth = new AuthService(http, fileController);
     const booking = new BookingService(http, fileController);
     const dataHelper = new DataHelper(fileController);
 
@@ -47,7 +50,8 @@ describe('Testing restful-booker API', function () {
     it('delete Booking by id', async () => {
         const randomId = dataHelper.getRandomIdfromFile(`./src/data/bookingIds.json`);
 
-        const { data, status } = await booking.deleteBookingById(randomId, auth.getToken() );
+        
+        const { data, status } = await booking.deleteBookingById( randomId, process.env.TOKEN );
         
         assertion.helperExpect(status).to.equal(201);
     });
@@ -55,51 +59,7 @@ describe('Testing restful-booker API', function () {
     it('Create booking', async () => {
         const randomBooking = dataHelper.getRandomBookingFromFile(`./src/data/bookings.json`);
         
-        const { data, status } = await booking.createBooking(randomBooking); 
-        // const { data, status } = await booking.createBooking(
-        // {
-        //     firstname : 'Jim',
-        //     lastname : 'Brown',
-        //     totalprice : 111,
-        //     depositpaid : true,
-        //     bookingdates : {
-        //         checkin : '2018-01-01',
-        //         checkout : '2019-01-01'
-        //     },
-        //     additionalneeds : 'Breakfast'
-        // }); 
-            
+        const { data, status } = await booking.createBooking(randomBooking);
         assertion.helperExpect(status).to.equal(200);
-        });
-    
-//   it('Create booking', async () => {
-//     const response = await axios.post('https://restful-booker.herokuapp.com/booking',  
-//     { headers: {
-//       'Content-Type': 'application/json',
-//       'Accept': 'application/json'
-//     }}, 
-//     {
-//       firstname : 'Jim',
-//       lastname : 'Brown',
-//       totalprice : 111,
-//       depositpaid : true,
-//       bookingdates : {
-//         checkin : '2018-01-01',
-//         checkout : '2019-01-01'
-//       },
-//       additionalneeds : 'Breakfast'
-//     }); 
-    
-//     expect(response.status).to.equal(200);
-//     expect(response.data.firstname).to.equal("Jim");
-//   });
-
-//   it('delete Booking by id', async () => {
-//     const response = await axios.delete('https://restful-booker.herokuapp.com/booking/527', { headers: {
-//       'Content-Type': 'application/json',
-//       'Cookie': 'token=49b03fb14526adc'
-//     }}); 
-    
-//     expect(response.status).to.equal(201);
-//   });
+    });
 });
