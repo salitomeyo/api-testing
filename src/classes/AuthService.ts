@@ -1,4 +1,5 @@
 import { HttpRequests } from "../helpers/HttpRequests";
+import { LoginInfo } from "../helpers/interfaces";
 
 export class AuthService{
     private token: string
@@ -10,21 +11,15 @@ export class AuthService{
     }
 
     getToken() {
-        console.log(this.token);
         return this.token;
     }
 
-    async getTokenAuth(username, password) {
-        const { data, status } = await this.http.post('https://restful-booker.herokuapp.com/auth', {
-            "username" : "admin",
-            "password" : "password123"
-        }, { 
-            "headers": {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
+    async getTokenAuth( loginInfo: LoginInfo) {
+
+        const { data, status } = await this.http.post('https://restful-booker.herokuapp.com/auth', loginInfo, { headers: {
+            accept: 'application/json'
         }});
 
-        console.log(data);
         this.token = `token=${data.token}`;
         return { data, status };
     }

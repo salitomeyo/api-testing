@@ -7,8 +7,7 @@ export class HttpRequests {
         return { data, status }
     }
 
-    async post( url: string, body: Object, headers: Object = {"headers": {}}) {
-        console.log(body, headers);
+    async post( url: string, headers: Object, body: Object) {
         const { data, status } = await axios.post(url, headers, body);
 
         return { data, status }

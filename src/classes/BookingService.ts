@@ -1,10 +1,9 @@
+import { FileController } from "../helpers/FileController";
 import { HttpRequests } from "../helpers/HttpRequests";
 import { BookingInfo } from "../helpers/interfaces";
 
-const fs = require('fs');
-
 export class BookingService{
-    constructor( private http: HttpRequests ){}
+    constructor( private http: HttpRequests, private fileController: FileController ){}
 
     async getBookingIds() {
         const { data, status } = await this.http.get('https://restful-booker.herokuapp.com/booking');
@@ -12,7 +11,7 @@ export class BookingService{
         let obj = {};
         obj["data"] = data;
         
-        await fs.writeFileSync(`./src/data/bookingIds.json`, JSON.stringify(obj));
+        this.fileController.createFile(`./src/data/bookingIds.json`, JSON.stringify(obj));
         return { data, status };
     }
 

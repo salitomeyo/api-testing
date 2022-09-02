@@ -3,14 +3,18 @@ import { Assertions } from "../src/helpers/Assertions";
 import { ApiHealthService } from "../src/classes/ApiHealthService";
 import { AuthService } from "../src/classes/AuthService";
 import { BookingService } from "../src/classes/BookingService";
+import { FileController } from "../src/helpers/FileController";
+import { DataHelper } from "../src/helpers/DataHelper";
 
 describe('Testing restful-booker API', function () {
   
     const http = new HttpRequests();
+    const fileController = new FileController();
     const assertion = new Assertions();
     const apiHealth = new ApiHealthService(http);
     const auth = new AuthService(http);
-    const booking = new BookingService(http);
+    const booking = new BookingService(http, fileController);
+    const dataHelper = new DataHelper(fileController);
 
     it('Check api health', async () => {
         const {data , status} = await apiHealth.getApiHealth();
@@ -20,7 +24,7 @@ describe('Testing restful-booker API', function () {
     });
 
     it('get Auth token', async () => {
-        const { data, status } = await auth.getTokenAuth("admin", "password123"); 
+        const { data, status } = await auth.getTokenAuth({username: "admin", password: "password123"}); 
         
         assertion.helperExpect(status).to.equal(200);
         assertion.helperExpect(data.token).to.not.be.null;
@@ -33,32 +37,39 @@ describe('Testing restful-booker API', function () {
     });
     
     it('get Booking', async () => {
-        const { data, status } = await booking.getBookingById(157);
+        const randomId = dataHelper.getRandomIdfromFile(`./src/data/bookingIds.json`);
+
+        const { data, status } = await booking.getBookingById(randomId);
         
         assertion.helperExpect(status).to.equal(200);
     });
     
     it('delete Booking by id', async () => {
-        const { data, status } = await booking.deleteBookingById(771, auth.getToken() );
+        const randomId = dataHelper.getRandomIdfromFile(`./src/data/bookingIds.json`);
+
+        const { data, status } = await booking.deleteBookingById(randomId, auth.getToken() );
         
         assertion.helperExpect(status).to.equal(201);
     });
     
     it('Create booking', async () => {
-        const { data, status } = await booking.createBooking(
-        {
-            firstname : 'Jim',
-            lastname : 'Brown',
-            totalprice : 111,
-            depositpaid : true,
-            bookingdates : {
-                checkin : '2018-01-01',
-                checkout : '2019-01-01'
-            },
-            additionalneeds : 'Breakfast'
-        }); 
+        const randomBooking = dataHelper.getRandomBookingFromFile(`./src/data/bookings.json`);
+        
+        const { data, status } = await booking.createBooking(randomBooking); 
+        // const { data, status } = await booking.createBooking(
+        // {
+        //     firstname : 'Jim',
+        //     lastname : 'Brown',
+        //     totalprice : 111,
+        //     depositpaid : true,
+        //     bookingdates : {
+        //         checkin : '2018-01-01',
+        //         checkout : '2019-01-01'
+        //     },
+        //     additionalneeds : 'Breakfast'
+        // }); 
             
-        assertion.helperExpect(status).to.equal(201);
+        assertion.helperExpect(status).to.equal(200);
         });
     
 //   it('Create booking', async () => {
